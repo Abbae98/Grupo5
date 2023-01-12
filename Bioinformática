@@ -1,0 +1,44 @@
+from Bio import Seq
+from Bio import SeqIO
+#Para ler o arquivo
+record = SeqIO.read(r"C:\Users\alici\Desktop\Bioinfo\Trabalho bioinfo\HNF1B_datasets\ncbi_dataset\data\sequence.gb","genbank")
+
+#Para verificar toda a informação
+
+len(record.seq)
+print(record.id)
+print(record.description)
+print(record.dbxrefs)
+print(record.annotations)
+
+# Determinar a especie à qual pertence este gene
+especies = []
+for record in SeqIO.parse(r"C:\Users\alici\Desktop\Bioinfo\Trabalho bioinfo\HNF1B_datasets\ncbi_dataset\data\sequence.gb","genbank"): 
+    especies.append(record.annotations["taxonomy"]) 
+    print(record.annotations["organism"])
+print(especies)
+
+# Verifique a lista de features do registo, nomeadamente o seu tipo e localização.
+for f in record.features:
+    print(f.type)
+    print(f.location)
+    
+#Identificar as sequencias codificantes e qual proteina codifica
+lista = [ ]
+for i in range(len(record.features)):
+    if record.features[i].type == "CDS":
+        lista.append(i)
+print(lista)
+for i in lista:
+    print()
+    print(record.features[i].qualifiers["product"])
+    
+ # Número de genes codidificados e nome 
+ novalista = [ ]
+for i in range(len(record2.features)):
+    if record2.features[i].type == "gene":
+        novalista.append(i)
+print(len(novalista))
+for i in novalista:
+    print(record2.features[i].qualifiers["gene"])
+    print(record2.features[i].location.strand)
